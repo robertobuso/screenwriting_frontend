@@ -24,6 +24,11 @@ let ideaStart = document.getElementById('start')
 let ideaEnd = document.getElementById('end')
 let ideaAct = document.getElementById('act')
 let ideaTurn = document.getElementById('turn')
+let ideaDescription = document.getElementById('description')
+let ideaConflict = document.getElementById('conflict')
+let ideaMisc = document.getElementById('miscellaneous')
+let ideaResearch = document.getElementById('research')
+let ideaInspo = document.getElementById('inspiration')
 projectIdeaForm.addEventListener("submit", submitProjectIdea)
 
 //query for navbar
@@ -75,6 +80,11 @@ function submitProjectIdea(event) {
       ends: ideaEnd.value,
       act: ideaAct.value,
       turn: ideaTurn.value,
+      description: ideaDescription.value,
+      conflict: ideaConflict.value,
+      research: ideaResearch.value,
+      inspiration: ideaInspo.value,
+      miscellaneous: ideaMisc.value,
       project_id: exisitingProjectTitleDropdown.value
     })
   })
@@ -89,7 +99,6 @@ function viewAllProjects(event) {
     fetch("http://localhost:3000/api/v1/projects")
       .then(rep => rep.json())
       .then(function (projects) {
-        console.log(projects)
         projects.forEach(function (project) {
           let bulletPoint = document.createElement("li")
           bulletPoint.innerText = project.title
@@ -99,6 +108,7 @@ function viewAllProjects(event) {
         })
       })
   }
+
 }
 
 //GET user clicks on a project title & goes to the idea page for that project
