@@ -1,13 +1,21 @@
 document.addEventListener("DOMContentLoaded", ()=> {
 
 //general queries
+let formContainer = document.getElementById('form_container')
 let allProjectDiv = document.getElementById("all_project_div")
+let projectList = document.getElementById('project_list')
+allProjectDiv.addEventListener("click", allIdeasPage)
 let allIdeasDiv = document.getElementById('all_ideas_for_project_div')
 
-//query for form, for function submitProjectIdea
-let formContainer = document.getElementById('form_container')
+//query for form to submit new project
+let newProjectForm = document.getElementById('create_new_project')
+let newProjectTitle = document.querySelector("[name=new_project_title]")
+let newProjectProtagonist = document.querySelector("[name=project_protagonist]")
+newProjectForm.addEventListener("submit", submitNewProject)
+
+//query for form to submit idea
 let projectIdeaForm = document.getElementById('create-project-idea-form')
-let projectNameInput = document.querySelector("[name=project_title]")
+let exisitingProjectTitleDropdown = document.querySelector('.exisiting_project')
 let ideaTitle = document.querySelector("[name=idea_title]")
 let ideaContent = document.querySelector("[name=idea_content]")
 let ideaProtagonist = document.querySelector("[name=protagonist]")
@@ -16,86 +24,156 @@ let ideaStart = document.getElementById('start')
 let ideaEnd = document.getElementById('end')
 let ideaAct = document.getElementById('act')
 let ideaTurn = document.getElementById('turn')
+let ideaDescription = document.getElementById('description')
+let ideaConflict = document.getElementById('conflict')
+let ideaMisc = document.getElementById('miscellaneous')
+let ideaResearch = document.getElementById('research')
+let ideaInspo = document.getElementById('inspiration')
 projectIdeaForm.addEventListener("submit", submitProjectIdea)
 
-function submitProjectIdea(event) {
-  event.preventDefault()
-  projectNameInput.value
-  ideaTitle.value
-  ideaContent.value
-  ideaProtagonist.value
-  ideaAntagonist.value
-  ideaStart.value
-  ideaEnd.value
-  ideaAct.value
-  ideaTurn.value
-
-  //create POST fetch request to send the value of the form to the api
-}
-
-//query for nav bar, function to view all project titles
+//query for navbar
 let navbar = document.getElementById('navbar_items')
 navbar.addEventListener("click", viewAllProjects)
-navbar.addEventListener("click", createProject)
+navbar.addEventListener("click", createProject) //haven't implemented
+navbar.addEventListener("click", createNewIdea) //haven't implemented
 
+//GET dropdown for exisiting project titles
+fetch("http://localhost:3000/api/v1/projects")
+  .then(rep => rep.json())
+  .then(function (projects) {
+    projects.forEach(function (project) {
+      let option = document.createElement("option")
+      option.innerText = project.title
+      option.value = project.id
+      exisitingProjectTitleDropdown.append(option)
+    })
+  })
+
+//POST submit a new project on our "homepage"
+function submitNewProject(event) {
+  event.preventDefault()
+  fetch("http://localhost:3000/api/v1/projects", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({title: newProjectTitle.value , protagonist: newProjectProtagonist.value})
+  })
+  newProjectTitle.value=""
+  newProjectProtagonist.value=""
+}
+
+//POST submit a new idea to an exisiting project on our "homepage"
+function submitProjectIdea(event) {
+  event.preventDefault()
+  fetch("http://localhost:3000/api/v1/ideas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: ideaTitle.value,
+      content: ideaContent.value ,
+      protagonist: ideaProtagonist.value,
+      antagonist: ideaAntagonist.value,
+      begins: ideaStart.value,
+      ends: ideaEnd.value,
+      act: ideaAct.value,
+      turn: ideaTurn.value,
+      description: ideaDescription.value,
+      conflict: ideaConflict.value,
+      research: ideaResearch.value,
+      inspiration: ideaInspo.value,
+      miscellaneous: ideaMisc.value,
+      project_id: exisitingProjectTitleDropdown.value
+    })
+  })
+}
+
+//GET user goes to navbar & clicks "view all projects"
 function viewAllProjects(event) {
   if (event.target.className === "view_projects") {
-    formContainer.innerHTML = "" //emptying the form div
+    formContainer.innerHTML = ""
     allProjectDiv.innerHTML = ""
     allIdeasDiv.innerHTML = ""
-    //fetch to add project titles
-    //create a ul
-    //for each project title, create li with project title and an a tag
-    //append ul to div
-    let allProjectList = document.createElement("ul")
-    allProjectList.className = "all_project_list"
-    allProjectList.innerHTML = "<li><a class='project_title' href='#'>Twitter Sucks</a></li>" //add idea id
-    allProjectDiv.append(allProjectList)
-
-    allProjectDiv.addEventListener("click", allIdeasPage)
-    //add event listener so that if a project title link is clicked, it goes to a page showing all ideas
-    //for that project
+    fetch("http://localhost:3000/api/v1/projects")
+      .then(rep => rep.json())
+      .then(function (projects) {
+        projects.forEach(function (project) {
+          let bulletPoint = document.createElement("li")
+          bulletPoint.innerText = project.title
+          bulletPoint.innerHTML = `<a data-id='${project.id}' class='project_title' href='#'>${project.title}</a>`
+          projectList.append(bulletPoint)
+          return allProjectDiv.append(projectList)
+        })
+      })
   }
+
 }
 
-//function for when you click on a specific project title, you then go to a page with all the ideas for that project
+//GET user clicks on a project title & goes to the idea page for that project
 function allIdeasPage(event) {
   if (event.target.className === "project_title") {
-    console.log(event.target.innerText) // save name of project title
     allProjectDiv.innerHTML = ""
-    //fetch to GET projects
-    //find project that contains that title
-    //iterate through each idea and append on page
-    // console.log(allIdeasDiv)
-    let saveDraggedStructure = document.createElement("button")
-    saveDraggedStructure.innerText = "Save Current Version"
-    let saveToTraditionalStructure = document.createElement("button")
-    saveToTraditionalStructure.innerText = "Save To A Traditioal Structure"
-    let createNewIdea = document.createElement("button")
-    createNewIdea.innerText = "Create A New Idea"
-    createNewIdea.className = "create_project"
+    let projectID = event.target.dataset.id
+    fetch("http://localhost:3000/api/v1/ideas")
+      .then(rep => rep.json())
+      .then(function (ideas) {
+        let project_ideas = ideas.filter(idea => idea.project_id === parseInt(projectID))
+        project_ideas.forEach(function (idea) {
 
-    let ideaBox = document.createElement("div")
-    ideaBox.className = "idea_box" //add border & background
-    ideaBox.innerHTML = "<h3>This is a story of how Twitter Sucks</h3>" //inner HTML would be idea oneliner
-    let ideaBox2 = document.createElement("div")
-    ideaBox2.className = "idea_box" //add border & background
-    ideaBox2.innerHTML = "<h3>And it goes likes this.....</h3>"
-    allIdeasDiv.append(saveDraggedStructure, saveToTraditionalStructure, createNewIdea, ideaBox, ideaBox2)
+          let editIdeaButton = document.createElement("button")
+          editIdeaButton.dataset.id = idea.id
+          editIdeaButton.innerText = "Edit"
 
-    //add event listener to each ideabox so that it can fade out & we can see that idea's data points
-    //add event listener to drag the idea boxes
-    createNewIdea.addEventListener("click", createProject)
+          let ideaBox = document.createElement("div")
+          ideaBox.className = "idea_box"
+          ideaBox.dataset.id = idea.id
+          ideaBox.innerHTML = `
+          <p>Title: ${idea.title}</p>
+          <p>Content: ${idea.content}</p>
+          <p>Protagonist: ${idea.protagonist}</p>
+          <p>Antagonist: ${idea.antagonist}</p>
+          <p>Begins: ${idea.begins}</p>
+          <p>Ends: ${idea.ends}</p>
+          <p>Act: ${idea.act}</p>
+          <p>Turn: ${idea.turn}</p>
+          `
+          ideaBox.append(editIdeaButton)
+          return allIdeasDiv.append(ideaBox)
+        })
+      })
   }
 }
 
-navbar.addEventListener("click", createProject)
 
+
+
+
+
+
+
+//this doesnt have function yet
 function createProject(event) {
+  event.preventDefault()
   if (event.target.className === "create_project") {
     allProjectDiv.innerHTML = ""
     allIdeasDiv.innerHTML = ""
-    formContainer.append(projectIdeaForm)
+    formContainer.append(newProjectForm, projectIdeaForm)
+    // allIdeasDiv.innerHTML = ""
+
+    //fetch to POST
+  }
+}
+
+//this doesnt have function yet
+function createNewIdea(event) {
+  event.preventDefault()
+  if (event.target.className === "create_idea") {
+    allProjectDiv.innerHTML = ""
+    allIdeasDiv.innerHTML = ""
+    formContainer.append(newProjectForm, projectIdeaForm)
+
     //fetch to POST
   }
 }
