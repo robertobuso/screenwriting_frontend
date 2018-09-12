@@ -18,28 +18,47 @@
         <a href="#" class="create_project">Create A Project</a>
       </div>
     </div>
-  <a href="#" class="create_project">Create A Idea</a>
-</div>
+  <a href="#" class="create_idea">Create A Idea</a>
+  </div>
   <!-- making new project instance along with new idea instance -->
   <!-- what if want to add a new idea instance to an exisisting project idea -->
   <div id="form_container">
+    <form id="create_new_project" style="">
+      <h3>Create A New Project</h3>
+      <label>Project Title</label>
+      <input type="text" name="new_project_title" value="" placeholder="Enter a project title" class="input-text">
+      <br>
+      <label>Project Protagonist</label>
+      <input type="text" name="project_protagonist" value="" placeholder="Enter the protagonist" class="input-text">
+      <br>
+      <br>
+      <input type="submit" name="submit" value="Submit" class="submit">
+    </form>
+
     <form id="create-project-idea-form" style="">
-      <h5>Submit An Idea for A Project</h5>
+      <h3>Submit An Idea for A Project</h3>
+      <label>Project Title</label>
       <input type="text" name="project_title" value="" placeholder="Enter a project title" class="input-text">
       <br>
+      <label>Idea Title</label>
       <input type="text" name="idea_title" value="" placeholder="Enter the idea title" class="input-text">
       <br>
+      <label>Idea Content</label>
       <input type="text" name="idea_content" value="" placeholder="Enter the idea content" class="input-text">
       <br>
+      <label>Idea Protagonist</label>
       <input type="text" name="protagonist" value="" placeholder="Enter the protagonist" class="input-text">
       <br>
+      <label>Idea Antagonist</label>
       <input type="text" name="antagonist" value="" placeholder="Enter the antagonist" class="input-text">
       <br>
+      <label>Begins</label>
       <select id="start">
         <option value="+">+</option>
         <option value="-">-</option>
       </select>
       <br>
+      <label>Ends</label>
       <select id="end">
         <option value="+">+</option>
         <option value="++">++</option>
@@ -48,13 +67,15 @@
         <option value="- - -">- - -</option>
       </select>
       <br>
+      <label>Act</label>
       <select id="act">
-        <option value="act_1">Act 1</option>
-        <option value="act_2">Act 2</option>
-        <option value="act_3">Act 3</option>
-        <option value="act_4">Act 4</option>
+        <option value="act_1">1</option>
+        <option value="act_2">2</option>
+        <option value="act_3">3</option>
+        <option value="act_4">4</option>
       </select>
       <br>
+      <label>Turn</label>
       <select id="turn">
         <option value="inciting_incident">Inciting Incident</option>
         <option value="break_two">Break Into Two</option>
@@ -66,11 +87,11 @@
       <br>
       <br>
       <input type="submit" name="submit" value="Submit" class="submit">
-      <!-- NEED checkboxes for idea attributes -->
     </form>
   </div>
 
   <div id="all_project_div">
+    <ul id="project_list"></ul>
     <!-- where all project titles are appended when View All Projects is clicked -->
   </div>
 

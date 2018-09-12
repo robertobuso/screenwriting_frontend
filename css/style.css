@@ -10,21 +10,21 @@ padding: 10px;
 
 
 .idea_box {
-  /* margin: 10px;
+  margin: 10px;
   padding: 10px;
   width: 300px;
   height: 300px;
   background-color: #70A288;
   color: white;
   font-size: 16px;
-  text-align: center; */
+  text-align: center;
   /* change transparent #ffffff when we change the background*/
-  background-image:
+  /* background-image:
     linear-gradient(180deg, white 3rem, #F0A4A4 calc(3rem), #F0A4A4 calc(3rem + 2px), transparent 1px),
     repeating-linear-gradient(0deg, transparent, transparent 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
   box-shadow: 1px 1px 3px rgba(0,0,0,.25);
   height: 14rem;
-  width: 400px;
+  width: 400px; */
 
   /* margin: auto;
   position: relative;
