@@ -64,31 +64,31 @@ function submitNewProject(event) {
 }
 
 //POST submit a new idea to an exisiting project on our "homepage"
-function submitProjectIdea(event) {
-  event.preventDefault()
-  fetch("http://localhost:3000/api/v1/ideas", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      title: ideaTitle.value,
-      content: ideaContent.value ,
-      protagonist: ideaProtagonist.value,
-      antagonist: ideaAntagonist.value,
-      begins: ideaStart.value,
-      ends: ideaEnd.value,
-      act: ideaAct.value,
-      turn: ideaTurn.value,
-      description: ideaDescription.value,
-      conflict: ideaConflict.value,
-      research: ideaResearch.value,
-      inspiration: ideaInspo.value,
-      miscellaneous: ideaMisc.value,
-      project_id: exisitingProjectTitleDropdown.value
-    })
-  })
-}
+// function submitProjectIdea(event) {
+//   event.preventDefault()
+//   fetch("http://localhost:3000/api/v1/ideas", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       title: ideaTitle.value,
+//       content: ideaContent.value ,
+//       protagonist: ideaProtagonist.value,
+//       antagonist: ideaAntagonist.value,
+//       begins: ideaStart.value,
+//       ends: ideaEnd.value,
+//       act: ideaAct.value,
+//       turn: ideaTurn.value,
+//       description: ideaDescription.value,
+//       conflict: ideaConflict.value,
+//       research: ideaResearch.value,
+//       inspiration: ideaInspo.value,
+//       miscellaneous: ideaMisc.value,
+//       project_id: exisitingProjectTitleDropdown.value
+//     })
+//   })
+// }
 
 //GET user goes to navbar & clicks "view all projects"
 function viewAllProjects(event) {
@@ -191,6 +191,32 @@ function createNewIdea(event) {
 
 
 
+//Single Idea View for Creating and Editing
+function submitProjectIdea(event) {
+  event.preventDefault()
+  fetch("http://localhost:3000/api/v1/ideas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: ideaTitle.value,
+      content: ideaContent.value ,
+      protagonist: ideaProtagonist.value,
+      antagonist: ideaAntagonist.value,
+      begins: ideaStart.value,
+      ends: ideaEnd.value,
+      act: ideaAct.value,
+      turn: ideaTurn.value,
+      description: ideaDescription.value,
+      conflict: ideaConflict.value,
+      research: ideaResearch.value,
+      inspiration: ideaInspo.value,
+      miscellaneous: ideaMisc.value,
+      project_id: exisitingProjectTitleDropdown.value
+    })
+  })
+}
 
 
 
