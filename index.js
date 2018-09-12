@@ -15,7 +15,7 @@ newProjectForm.addEventListener("submit", submitNewProject)
 
 //query for form to submit idea
 let projectIdeaForm = document.getElementById('create-project-idea-form')
-let projectNameInput = document.querySelector("[name=project_title]")
+let exisitingProjectTitleDropdown = document.querySelector('.exisiting_project')
 let ideaTitle = document.querySelector("[name=idea_title]")
 let ideaContent = document.querySelector("[name=idea_content]")
 let ideaProtagonist = document.querySelector("[name=protagonist]")
@@ -32,11 +32,21 @@ navbar.addEventListener("click", viewAllProjects)
 navbar.addEventListener("click", createProject) //haven't implemented
 navbar.addEventListener("click", createNewIdea) //haven't implemented
 
+//GET dropdown for exisiting project titles
+fetch("http://localhost:3000/api/v1/projects")
+  .then(rep => rep.json())
+  .then(function (projects) {
+    projects.forEach(function (project) {
+      let option = document.createElement("option")
+      option.innerText = project.title
+      option.value = project.id
+      exisitingProjectTitleDropdown.append(option)
+    })
+  })
+
 //POST submit a new project on our "homepage"
 function submitNewProject(event) {
   event.preventDefault()
-  newProjectTitle.value
-  newProjectProtagonist.value
   fetch("http://localhost:3000/api/v1/projects", {
     method: "POST",
     headers: {
@@ -48,18 +58,26 @@ function submitNewProject(event) {
   newProjectProtagonist.value=""
 }
 
+//POST submit a new idea to an exisiting project on our "homepage"
 function submitProjectIdea(event) {
   event.preventDefault()
-  projectNameInput.value
-  ideaTitle.value
-  ideaContent.value
-  ideaProtagonist.value
-  ideaAntagonist.value
-  ideaStart.value
-  ideaEnd.value
-  ideaAct.value
-  ideaTurn.value
-  //create POST fetch request to send the value of the form to the api
+  fetch("http://localhost:3000/api/v1/ideas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: ideaTitle.value,
+      content: ideaContent.value ,
+      protagonist: ideaProtagonist.value,
+      antagonist: ideaAntagonist.value,
+      begins: ideaStart.value,
+      ends: ideaEnd.value,
+      act: ideaAct.value,
+      turn: ideaTurn.value,
+      project_id: exisitingProjectTitleDropdown.value
+    })
+  })
 }
 
 //GET user goes to navbar & clicks "view all projects"
@@ -93,6 +111,11 @@ function allIdeasPage(event) {
       .then(function (ideas) {
         let project_ideas = ideas.filter(idea => idea.project_id === parseInt(projectID))
         project_ideas.forEach(function (idea) {
+
+          let editIdeaButton = document.createElement("button")
+          editIdeaButton.dataset.id = idea.id
+          editIdeaButton.innerText = "Edit"
+
           let ideaBox = document.createElement("div")
           ideaBox.className = "idea_box"
           ideaBox.dataset.id = idea.id
@@ -106,6 +129,7 @@ function allIdeasPage(event) {
           <p>Act: ${idea.act}</p>
           <p>Turn: ${idea.turn}</p>
           `
+          ideaBox.append(editIdeaButton)
           return allIdeasDiv.append(ideaBox)
         })
       })
@@ -119,12 +143,7 @@ function allIdeasPage(event) {
 
 
 
-
-
-
-
-
-
+//this doesnt have function yet
 function createProject(event) {
   event.preventDefault()
   if (event.target.className === "create_project") {
@@ -137,6 +156,7 @@ function createProject(event) {
   }
 }
 
+//this doesnt have function yet
 function createNewIdea(event) {
   event.preventDefault()
   if (event.target.className === "create_idea") {

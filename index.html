@@ -20,8 +20,8 @@
     </div>
   <a href="#" class="create_idea">Create A Idea</a>
   </div>
-  <!-- making new project instance along with new idea instance -->
-  <!-- what if want to add a new idea instance to an exisisting project idea -->
+
+  <!-- idea needs to be added to exisiting project -->
   <div id="form_container">
     <form id="create_new_project" style="">
       <h3>Create A New Project</h3>
@@ -38,7 +38,8 @@
     <form id="create-project-idea-form" style="">
       <h3>Submit An Idea for A Project</h3>
       <label>Project Title</label>
-      <input type="text" name="project_title" value="" placeholder="Enter a project title" class="input-text">
+      <select class="exisiting_project">
+      </select>
       <br>
       <label>Idea Title</label>
       <input type="text" name="idea_title" value="" placeholder="Enter the idea title" class="input-text">
