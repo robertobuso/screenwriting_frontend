@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", ()=> {
 
-//general queries
+//general queries (main document containers)
 let formContainer = document.getElementById('form_container')
 let allProjectDiv = document.getElementById("all_project_div")
 let projectList = document.getElementById('project_list')

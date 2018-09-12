@@ -8,35 +8,30 @@ width: 50%;
 padding: 10px;
 }
 
+#all_ideas_for_project_div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin-left: 10%;
+}
 
 .idea_box {
   margin: 10px;
   padding: 10px;
   width: 300px;
   height: 300px;
-  background-color: #70A288;
-  color: white;
-  font-size: 16px;
+  /* background-color: #70A288; */
+  color: black;
+  font-size: 14px;
   text-align: center;
   /* change transparent #ffffff when we change the background*/
-  /* background-image:
+  background-image:
     linear-gradient(180deg, white 3rem, #F0A4A4 calc(3rem), #F0A4A4 calc(3rem + 2px), transparent 1px),
-    repeating-linear-gradient(0deg, transparent, transparent 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
+    repeating-linear-gradient(0deg, #ffffff, #ffffff 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
   box-shadow: 1px 1px 3px rgba(0,0,0,.25);
-  height: 14rem;
-  width: 400px; */
-
-  /* margin: auto;
-  position: relative;
-  top: 50%; */
-  /* transform: translateY(-50%); */
+  height: 275px;
+  width: 300px;
 }
-
-
-
-
-
-
 
 
 /* all of this is css for navbar */
