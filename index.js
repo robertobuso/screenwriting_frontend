@@ -11,7 +11,7 @@ let allIdeasDiv = document.getElementById('all_ideas_for_project_div')
 let newProjectForm = document.getElementById('create_new_project')
 let newProjectTitle = document.querySelector("[name=new_project_title]")
 let newProjectProtagonist = document.querySelector("[name=project_protagonist]")
-newProjectForm.addEventListener("submit", submitNewProject)
+// newProjectForm.addEventListener("submit", submitNewProject)
 
 //query for form to submit idea
 let projectIdeaForm = document.getElementById('create-project-idea-form')
@@ -38,16 +38,16 @@ navbar.addEventListener("click", createProject) //haven't implemented
 navbar.addEventListener("click", createNewIdea) //haven't implemented
 
 //GET dropdown for exisiting project titles
-fetch("http://localhost:3000/api/v1/projects")
-  .then(rep => rep.json())
-  .then(function (projects) {
-    projects.forEach(function (project) {
-      let option = document.createElement("option")
-      option.innerText = project.title
-      option.value = project.id
-      exisitingProjectTitleDropdown.append(option)
-    })
-  })
+// fetch("http://localhost:3000/api/v1/projects")
+//   .then(rep => rep.json())
+//   .then(function (projects) {
+//     projects.forEach(function (project) {
+//       let option = document.createElement("option")
+//       option.innerText = project.title
+//       option.value = project.id
+//       exisitingProjectTitleDropdown.append(option)
+//     })
+//   })
 
 //POST submit a new project on our "homepage"
 function submitNewProject(event) {
@@ -63,32 +63,33 @@ function submitNewProject(event) {
   newProjectProtagonist.value=""
 }
 
-//POST submit a new idea to an exisiting project on our "homepage"
-// function submitProjectIdea(event) {
-//   event.preventDefault()
-//   fetch("http://localhost:3000/api/v1/ideas", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       title: ideaTitle.value,
-//       content: ideaContent.value ,
-//       protagonist: ideaProtagonist.value,
-//       antagonist: ideaAntagonist.value,
-//       begins: ideaStart.value,
-//       ends: ideaEnd.value,
-//       act: ideaAct.value,
-//       turn: ideaTurn.value,
-//       description: ideaDescription.value,
-//       conflict: ideaConflict.value,
-//       research: ideaResearch.value,
-//       inspiration: ideaInspo.value,
-//       miscellaneous: ideaMisc.value,
-//       project_id: exisitingProjectTitleDropdown.value
-//     })
-//   })
-// }
+// POST submit a new idea to an exisiting project on our "homepage"
+function submitProjectIdea(event) {
+  event.preventDefault()
+  fetch("http://localhost:3000/api/v1/ideas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: ideaTitle.value,
+      content: ideaContent.value ,
+      protagonist: ideaProtagonist.value,
+      antagonist: ideaAntagonist.value,
+      begins: ideaStart.value,
+      ends: ideaEnd.value,
+      act: ideaAct.value,
+      turn: ideaTurn.value,
+      description: ideaDescription.value,
+      conflict: ideaConflict.value,
+      research: ideaResearch.value,
+      inspiration: ideaInspo.value,
+      miscellaneous: ideaMisc.value,
+      project_id: 1
+    })
+  })
+  projectIdeaForm.reset()
+}
 
 //GET user goes to navbar & clicks "view all projects"
 function viewAllProjects(event) {
@@ -147,12 +148,6 @@ function allIdeasPage(event) {
 }
 
 
-
-
-
-
-
-
 //this doesnt have function yet
 function createProject(event) {
   event.preventDefault()
@@ -177,48 +172,6 @@ function createNewIdea(event) {
     //fetch to POST
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Single Idea View for Creating and Editing
-function submitProjectIdea(event) {
-  event.preventDefault()
-  fetch("http://localhost:3000/api/v1/ideas", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      title: ideaTitle.value,
-      content: ideaContent.value ,
-      protagonist: ideaProtagonist.value,
-      antagonist: ideaAntagonist.value,
-      begins: ideaStart.value,
-      ends: ideaEnd.value,
-      act: ideaAct.value,
-      turn: ideaTurn.value,
-      description: ideaDescription.value,
-      conflict: ideaConflict.value,
-      research: ideaResearch.value,
-      inspiration: ideaInspo.value,
-      miscellaneous: ideaMisc.value,
-      project_id: exisitingProjectTitleDropdown.value
-    })
-  })
-}
-
-
 
 
 

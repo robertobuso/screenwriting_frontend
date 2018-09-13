@@ -103,6 +103,9 @@ padding: 10px;
 
 
 /* Creating the Single Idea View */
+body {
+  background-image: url("cork_2.jpg");
+}
 
 .wrapperindex {
   display: grid;
@@ -157,10 +160,6 @@ padding: 10px;
   height: 10px;
 }
 
-body {
-  background-image: url("cork_2.jpg");
-}
-
 .idea_title_input {
   background-color: white;
   border: none;
@@ -178,6 +177,7 @@ body {
   width: 975px;
 }
 
+/*The following code changes the color of the placehoder text */
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: silver;
     font-style: italic;
@@ -195,13 +195,8 @@ body {
 }
 
 .submit-btn {
-  position: absolute;
-  bottom: 275;
   font-size: 18px;
   float: left;
   background: #F4A460;
-}
-
-label {
-
+   border-radius: 25px;
 }

@@ -18,11 +18,11 @@
         <a href="#" class="create_project">Create A Project</a>
       </div>
     </div>
-  <a href="#" class="create_idea">Create A Idea</a>
+  <a href="#" class="create_idea">View All Ideas</a>
   </div>
 
   <!-- idea needs to be added to exisiting project -->
-  <div id="form_container">
+  <!-- <div id="form_container">
     <form id="create_new_project" style="">
       <h3>Create A New Project</h3>
       <label>Project Title</label>
@@ -33,112 +33,129 @@
       <br>
       <br>
       <input type="submit" name="submit" value="Submit" class="submit">
-    </form>
+    </form> -->
 
     <form id="create-project-idea-form" style="">
-      <h3>Submit An Idea for A Project</h3>
-      <label>Project Title</label>
-      <select class="exisiting_project">
-      </select>
-      <br>
-      <label>Idea Title</label>
-      <input type="text" name="idea_title" value="" placeholder="Enter the idea title" class="input-text">
-      <br>
-      <label>Idea Content</label>
-      <input type="text" name="idea_content" value="" placeholder="Enter the idea content" class="input-text">
-      <br>
-      <label>Idea Protagonist</label>
-      <input type="text" name="protagonist" value="" placeholder="Enter the protagonist" class="input-text">
-      <br>
-      <label>Idea Antagonist</label>
-      <input type="text" name="antagonist" value="" placeholder="Enter the antagonist" class="input-text">
-      <br>
-      <label>Begins</label>
-      <select id="start">
-        <option value=nil></option>
-        <option value="+">+</option>
-        <option value="-">-</option>
-      </select>
-      <br>
-      <label>Ends</label>
-      <select id="end">
-        <option value=nil></option>
-        <option value="+">+</option>
-        <option value="++">++</option>
-        <option value="+++">+++</option>
-        <option value="- -">- -</option>
-        <option value="- - -">- - -</option>
-      </select>
-      <br>
-      <label>Act</label>
-      <select id="act">
-        <option value=nil></option>
-        <option value="act_1">1</option>
-        <option value="act_2">2</option>
-        <option value="act_3">3</option>
-        <option value="act_4">4</option>
-      </select>
-      <br>
-      <label>Turn</label>
-      <select id="turn">
-        <option value=nil></option>
-        <option value="inciting_incident">Inciting Incident</option>
-        <option value="break_two">Break Into Two</option>
-        <option value="midpoint">Midpoint</option>
-        <option value="break_four">Break Into Four</option>
-        <option value="crisis_decision">Crisis Decision</option>
-        <option value="denouement">Denouement</option>
-      </select>
-      <br>
-      <label>Description</label>
-      <select id="description">
-        <option value=nil></option>
-        <option value="character">Character</option>
-        <option value="location">Location</option>
-        <option value="scene">Scene</option>
-        <option value="sequence">Sequence</option>
-        <option value="act">Act</option>
-      </select>
-      <br>
-      <label>Conflict</label>
-      <select id="conflict">
-        <option value=nil></option>
-        <option value="character">Character</option>
-        <option value="scene">Scene</option>
-        <option value="sequence">Sequence</option>
-        <option value="act">Act</option>
-      </select>
-      <br>
-      <label>Miscellaneous</label>
-      <select id="miscellaneous">
-        <option value=nil></option>
-        <option value="action">Action</option>
-        <option value="sample_dialogue">Sample Dialogue</option>
-        <option value="production_reality">Production Reality</option>
-      </select>
-      <br>
-      <label>Research</label>
-      <select id="research">
-        <option value=nil></option>
-        <option value="character">Character</option>
-        <option value="scene">Scene</option>
-        <option value="theme">Theme</option>
-        <option value="time">Time</option>
-        <option value="place">Place</option>
-      </select>
-      <br>
-      <label>Inspiration</label>
-      <select id="inspiration">
-        <option value=nil></option>
-        <option value="visual">Visual</option>
-        <option value="aural">Aural</option>
-        <option value="factual">Factual</option>
-      </select>
+      <div id="single_idea" class="wrapperindex">
+        <div id="top_margin"></div>
+        <div id="left_buttons_column">
+          <br>
+          <input type="text" name="protagonist" value="" placeholder="scene protagonist" class="left_side_button">
+          <br>
+          <br>
+        <input type="text" name="antagonist" value="" placeholder="scene antagonist" class="left_side_button">
+        <br>
+        <br>
+        <label>Act: </label>
+        <br>
+        <select id="act">
+          <option value=""></option>
+          <option value="act_1">1</option>
+          <option value="act_2">2</option>
+          <option value="act_3">3</option>
+          <option value="act_4">4</option>
+        </select>
+        <br>
+        <br>
+        <label>Turn: </label>
+        <select id="turn">
+          <option value=""></option>
+          <option value="inciting_incident">Inciting Incident</option>
+          <option value="break_two">Break Into Two</option>
+          <option value="midpoint">Midpoint</option>
+          <option value="break_four">Break Into Four</option>
+          <option value="crisis_decision">Crisis Decision</option>
+          <option value="denouement">Denouement</option>
+        </select>
+        <br>
+        <br>
+        <br>
+        <label>Begins: </label>
+        <select id="start">
+          <option value=""></option>
+          <option value="+">+</option>
+          <option value="-">-</option>
+        </select>
+        <br>
+        <br>
+        <label>Ends: </label>
+        <select id="end">
+          <option value=""></option>
+          <option value="+">+</option>
+          <option value="++">++</option>
+          <option value="+++">+++</option>
+          <option value="-">-</option>
+          <option value="- -">- -</option>
+          <option value="- - -">- - -</option>
+        </select>
       <br>
       <br>
-      <input type="submit" name="submit" value="Submit" class="submit">
+        </div>
+
+        <div id="content_grid">
+          <input type="text" name="idea_title" value="" placeholder="short description" class="idea_title_input">
+          <br>
+          <input type="text" name="idea_content" value="" placeholder="your text..." class="idea_content_input">
+        </div>
+        <div id="right_buttons_column">
+              <input type="submit" name="new" value="New Idea" class="submit-btn">
+              <br>
+              <br>
+              <input type="submit" name="edit" value="Edit Idea" class="submit-btn">
+        </div>
+
+        <div id="right_margin"> </div>
+
+        <div id="bottom_banner">
+          <label>Description</label>
+          <select id="description">
+            <option value=""></option>
+            <option value="character">Character</option>
+            <option value="location">Location</option>
+            <option value="scene">Scene</option>
+            <option value="sequence">Sequence</option>
+            <option value="act">Act</option>
+          </select>
+
+          <label>Conflict</label>
+          <select id="conflict">
+            <option value=""></option>
+            <option value="character">Character</option>
+            <option value="scene">Scene</option>
+            <option value="sequence">Sequence</option>
+            <option value="act">Act</option>
+          </select>
+
+          <label>Miscellaneous</label>
+          <select id="miscellaneous">
+            <option value=""></option>
+            <option value="action">Action</option>
+            <option value="sample_dialogue">Sample Dialogue</option>
+            <option value="production_reality">Production Reality</option>
+          </select>
+
+          <label>Research</label>
+          <select id="research">
+            <option value=""></option>
+            <option value="character">Character</option>
+            <option value="scene">Scene</option>
+            <option value="theme">Theme</option>
+            <option value="time">Time</option>
+            <option value="place">Place</option>
+          </select>
+
+          <label>Inspiration</label>
+          <select id="inspiration">
+            <option value=""></option>
+            <option value="visual">Visual</option>
+            <option value="aural">Aural</option>
+            <option value="factual">Factual</option>
+          </select>
+        </div>
+
+        <div id="previous_next_banner">Back 7/15 Next</div>
+      </div>
     </form>
-  </div>
 
   <div id="all_project_div">
     <ul id="project_list"></ul>
