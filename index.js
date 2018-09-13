@@ -98,9 +98,15 @@ function submitProjectIdea(event) {
     })
   })
   .then(r => r.json())
-  .then(newIdea => showSingleIdea(newIdea))
+  .then(newIdea => {
+    currentIdea = newIdea
+    let x = currentStructure.length + 1
+    currentStructure.push({x: newIdea["id"]})
+    debugger
+    showSingleIdea(newIdea)
   projectIdeaForm.reset()
   //WE NEED TO SAVE/POST NEW STRUCTURE HERE
+  })
 }
 
 //GET user goes to navbar & clicks "view all projects"
@@ -125,6 +131,7 @@ function viewAllProjects(event) {
 
 //GET user clicks on a project title & goes to the idea page for that project
 function allIdeasPage(event) {
+  findStructure(event)
   if (event.target.className === "project_title") {
     allProjectDiv.innerHTML = ""
     let projectID = event.target.dataset.id
@@ -171,7 +178,6 @@ function allIdeasPage(event) {
           ideaCard.append(ideaBoxBack)
           ideaContainer.append(ideaCard)
           return allIdeasDiv.append(ideaContainer)
-
           // return allIdeasDiv.append(ideaBox)
         })
       })
@@ -179,11 +185,7 @@ function allIdeasPage(event) {
 }
 
 
-
-
 //POST when user clickes on "Create A Project" on the navbar
-
-
 function createProject(event) {
   event.preventDefault()
   if (event.target.className === "create_project") {
@@ -211,14 +213,12 @@ function createProject(event) {
   }
 }
 
-
 //Declare Variables for CurrentIdea and CurrentStructure
 let currentIdea
-let currentStructure
+let currentStructure = []
 
 //Activate Edit button
 let editButton = document.getElementById('edit-btn')
-
 editButton.addEventListener('click', event => editSingleIdea(event))
 
 //Populate Single View Card with Content and Values
@@ -238,7 +238,6 @@ function showSingleIdea(idea){
   ideaResearch.value = idea.research
   ideaInspo.value = idea.inspiration
   ideaMisc.value = idea.miscellaneous
-
 }
 
 //Update Single View Card with new Content and Values
@@ -269,7 +268,34 @@ function editSingleIdea(event){
   .then(newIdea => showSingleIdea(newIdea))
 }
 
+//Activate Save Structure link
+let saveStructureLink = document.querySelector('.save_structure')
+saveStructureLink.addEventListener('click', event => saveStructure(event))
 
+function saveStructure(event) {
+  const newStructureTitle = prompt("Please provide a name for this structure.")
+
+  fetch("http://localhost:3000/api/v1/structures",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({title: newStructureTitle, order:currentStructure, saved: true, project_id: currentIdea.project_id})
+    }
+  )
+  .then(r => r.json())
+  .then(r => console.log(r))
+}
+
+function findStructure(event) {
+  fetch("http://localhost:3000/api/v1/projects/" + event.target.dataset.id)
+    .then(rep => rep.json())
+    .then(function (project) {
+      currentStructure = project.structures[project.structures.length - 1].order
+      currentIdea = project.ideas[currentStructure.length - 1]
+    })
+}
 
 
 }) //dom event listener
