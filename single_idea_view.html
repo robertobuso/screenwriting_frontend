@@ -79,15 +79,19 @@
   <br>
   <br>
     </div>
-    
+
     <div id="content_grid">
       <input type="text" name="idea_title" value="" placeholder="short description" class="idea_title_input">
       <br>
       <input type="text" name="idea_content" value="" placeholder="your text..." class="idea_content_input">
     </div>
 
-    <div id="right_buttons_column">Buttons </div>
+    <div id="right_buttons_column">
+          <input type="submit" name="submit" value="Submit" class="submit-btn">
+    </div>
+
     <div id="right_margin"> </div>
+
     <div id="bottom_banner">
       <label>Description</label>
       <select id="description">
@@ -98,9 +102,44 @@
         <option value="sequence">Sequence</option>
         <option value="act">Act</option>
       </select>
+
+      <label>Conflict</label>
+      <select id="conflict">
+        <option value=nil></option>
+        <option value="character">Character</option>
+        <option value="scene">Scene</option>
+        <option value="sequence">Sequence</option>
+        <option value="act">Act</option>
+      </select>
+
+      <label>Miscellaneous</label>
+      <select id="miscellaneous">
+        <option value=nil></option>
+        <option value="action">Action</option>
+        <option value="sample_dialogue">Sample Dialogue</option>
+        <option value="production_reality">Production Reality</option>
+      </select>
+
+      <label>Research</label>
+      <select id="research">
+        <option value=nil></option>
+        <option value="character">Character</option>
+        <option value="scene">Scene</option>
+        <option value="theme">Theme</option>
+        <option value="time">Time</option>
+        <option value="place">Place</option>
+      </select>
+
+      <label>Inspiration</label>
+      <select id="inspiration">
+        <option value=nil></option>
+        <option value="visual">Visual</option>
+        <option value="aural">Aural</option>
+        <option value="factual">Factual</option>
+      </select>
     </div>
 
-    <div id="bottom_banner">Back 7/15 Next</div>
+    <div id="previous_next_banner">Back 7/15 Next</div>
   </div>
 </form>
 

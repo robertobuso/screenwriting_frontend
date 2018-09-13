@@ -116,8 +116,18 @@ padding: 10px;
   grid-column: 1/5;
   height: 40px;
   font-size: 20px;
-  margin-left: 150px;
+  margin-left: 170px;
   margin-right: 30px;
+}
+
+#previous_next_banner {
+  grid-column: 1/5;
+  height: 40px;
+  font-size: 20px;
+  margin-left: 170px;
+  margin-right: 30px;
+  text-align: center;
+  background: #F4A460;
 }
 
 #left_buttons_column {
@@ -128,10 +138,8 @@ padding: 10px;
 
 #right_buttons_column {
   height: 400px;
-  text-align: center;
   font-size: 20px;
   margin-right: 30px;
-  background: yellow;
 }
 
 #content_grid {
@@ -186,6 +194,13 @@ body {
     font-style: italic;
 }
 
+.submit-btn {
+  position: absolute;
+  bottom: 275;
+  font-size: 18px;
+  float: left;
+  background: #F4A460;
+}
 
 label {
 
