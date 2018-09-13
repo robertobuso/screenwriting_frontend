@@ -21,7 +21,6 @@
   <a href="#" class="create_idea">Create A Idea</a>
   </div>
 
-  <!-- idea needs to be added to exisiting project -->
   <div id="form_container">
     <form id="create_new_project" style="">
       <h3>Create A New Project</h3>
@@ -73,10 +72,10 @@
       <label>Act</label>
       <select id="act">
         <option value=nil></option>
-        <option value="act_1">1</option>
-        <option value="act_2">2</option>
-        <option value="act_3">3</option>
-        <option value="act_4">4</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
       </select>
       <br>
       <label>Turn</label>
@@ -145,8 +144,14 @@
     <!-- where all project titles are appended when View All Projects is clicked -->
   </div>
 
+  <!-- where all idea divs are appended when a specific project is clicked -->
   <div id="all_ideas_for_project_div">
-    <!-- where all idea divs are appended when a specific project is clicked -->
+    <!-- <div class="idea_container">
+      <div class="idea_card">
+        <div class="idea_front"></div>
+        <div class="idea_back"></div>
+      </div>
+    </div> -->
   </div>
 
 <script src="index.js" charset="utf-8"></script>

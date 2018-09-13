@@ -9,29 +9,80 @@ padding: 10px;
 }
 
 #all_ideas_for_project_div {
-  display: flex;
-  flex-wrap: wrap;
-  width: 90%;
-  margin-left: 10%;
+display: flex;
+flex-wrap: wrap;
+width: 90%;
+margin-left: 10%;
 }
 
-.idea_box {
+/* holds all the elements & determines size of the cardd*/
+.idea_container {
+  position: relative;
+  width: 275px;
+  height: 300px;
   margin: 10px;
   padding: 10px;
-  width: 300px;
-  height: 300px;
-  /* background-color: #70A288; */
-  color: black;
-  font-size: 14px;
   text-align: center;
-  /* change transparent #ffffff when we change the background*/
-  background-image:
+}
+
+    /* .idea_box {
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 300px;
+    background-color: #70A288;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    change transparent #ffffff when we change the background
+    background-image:
     linear-gradient(180deg, white 3rem, #F0A4A4 calc(3rem), #F0A4A4 calc(3rem + 2px), transparent 1px),
     repeating-linear-gradient(0deg, #ffffff, #ffffff 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
-  box-shadow: 1px 1px 3px rgba(0,0,0,.25);
-  height: 275px;
-  width: 300px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.25);
+    height: 275px;
+    width: 300px;
+    } */
+
+  /* holds the front and back and controls the hover action */
+.idea_card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
 }
+
+.idea_card:hover{
+  transform: rotateY(180deg);
+}
+/*  shows font face */
+.idea_box_front{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  /* background-color: yellow;
+  color: red; */
+  background-image:
+  linear-gradient(180deg, white 3rem, #F0A4A4 calc(3rem), #F0A4A4 calc(3rem + 2px), transparent 1px),
+  repeating-linear-gradient(0deg, #ffffff, #ffffff 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
+  box-shadow: 1px 1px 3px rgba(0,0,0,.25);
+  /* height: 275px;
+  width: 300px; */
+}
+
+/*  shows back face */
+.idea_box_back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: black;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+
 
 
 /* all of this is css for navbar */
@@ -94,4 +145,8 @@ padding: 10px;
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.navbar :nth-child(2) {
+  float: right
 }
