@@ -34,26 +34,8 @@
     <input type="text" name="antagonist" value="" placeholder="scene antagonist" class="left_side_button">
     <br>
     <br>
-    <label>Begins</label>
-    <select id="start">
-      <option value=nil></option>
-      <option value="+">+</option>
-      <option value="-">-</option>
-    </select>
     <br>
-    <br>
-    <label>Ends</label>
-    <select id="end">
-      <option value=nil></option>
-      <option value="+">+</option>
-      <option value="++">++</option>
-      <option value="+++">+++</option>
-      <option value="- -">- -</option>
-      <option value="- - -">- - -</option>
-    </select>
-  <br>
-  <br>
-    <label>Act</label>
+    <label>Act: </label>
     <select id="act">
       <option value=nil></option>
       <option value="act_1">1</option>
@@ -63,7 +45,7 @@
     </select>
     <br>
     <br>
-    <label>Turn</label>
+    <label>Turn: </label>
     <select id="turn">
       <option value=nil></option>
       <option value="inciting_incident">Inciting Incident</option>
@@ -73,15 +55,51 @@
       <option value="crisis_decision">Crisis Decision</option>
       <option value="denouement">Denouement</option>
     </select>
+    <br>
+    <br>
+    <br>
+    <label>Begins: </label>
+    <select id="start">
+      <option value=nil></option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+    <br>
+    <br>
+    <label>Ends: </label>
+    <select id="end">
+      <option value=nil></option>
+      <option value="+">+</option>
+      <option value="++">++</option>
+      <option value="+++">+++</option>
+      <option value="-">-</option>
+      <option value="- -">- -</option>
+      <option value="- - -">- - -</option>
+    </select>
+  <br>
+  <br>
     </div>
+    
     <div id="content_grid">
       <input type="text" name="idea_title" value="" placeholder="short description" class="idea_title_input">
       <br>
       <input type="text" name="idea_content" value="" placeholder="your text..." class="idea_content_input">
     </div>
+
     <div id="right_buttons_column">Buttons </div>
     <div id="right_margin"> </div>
-    <div id="bottom_banner">Attributes</div>
+    <div id="bottom_banner">
+      <label>Description</label>
+      <select id="description">
+        <option value=nil></option>
+        <option value="character">Character</option>
+        <option value="location">Location</option>
+        <option value="scene">Scene</option>
+        <option value="sequence">Sequence</option>
+        <option value="act">Act</option>
+      </select>
+    </div>
+
     <div id="bottom_banner">Back 7/15 Next</div>
   </div>
 </form>
