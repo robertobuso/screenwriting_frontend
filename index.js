@@ -2,13 +2,33 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
 //general queries (main document containers)
 let formContainer = document.getElementById('form_container')
-let allProjectDiv = document.getElementById("all_project_div")
-let projectList = document.getElementById('project_list')
+let newProjectContainer = document.getElementById("append_all_project_div")
+let allProjectDiv = document.createElement("div")
+allProjectDiv.className = "all_project_div"
+let projectList = document.createElement("ul")
+projectList.className = "project_list"
+allProjectDiv.append(projectList)
 allProjectDiv.addEventListener("click", allIdeasPage)
 let allIdeasDiv = document.getElementById('all_ideas_for_project_div')
+allIdeasDiv.addEventListener("click", showASingleIdea)
 
 //query for form to submit new project
-let newProjectForm = document.getElementById('create_new_project')
+let newProjectForm = document.createElement("form")
+newProjectForm.className = 'create_new_project'
+
+newProjectForm.innerHTML = `
+<h3>Create A New Project</h3>
+<label>Project Title</label>
+<input type="text" name="new_project_title" value="" placeholder="Enter a project title" class="input-text">
+<br>
+<label>Project Protagonist</label>
+<input type="text" name="project_protagonist" value="" placeholder="Enter the protagonist" class="input-text">
+<br>
+<br>
+<input type="submit" name="submit" value="Submit" class="submit">`
+
+// formContainer.append(newProjectForm)
+
 let newProjectTitle = document.querySelector("[name=new_project_title]")
 let newProjectProtagonist = document.querySelector("[name=project_protagonist]")
 newProjectForm.addEventListener("submit", submitNewProject)
@@ -105,10 +125,11 @@ function submitProjectIdea(event) {
 
 //GET user goes to navbar & clicks "view all projects"
 function viewAllProjects(event) {
+  formContainer.innerHTML = ""
+  projectIdeaForm.innerHTML = ""
+  allProjectDiv.innerHTML = ""
+  allIdeasDiv.innerHTML = ""
   if (event.target.className === "view_projects") {
-    formContainer.innerHTML = ""
-    allProjectDiv.innerHTML = ""
-    allIdeasDiv.innerHTML = ""
     fetch("http://localhost:3000/api/v1/projects")
       .then(rep => rep.json())
       .then(function (projects) {
@@ -118,6 +139,8 @@ function viewAllProjects(event) {
           bulletPoint.innerHTML = `<a data-id='${project.id}' class='project_title' href='#'>${project.title}</a>`
           projectList.append(bulletPoint)
           allProjectDiv.append(projectList)
+          newProjectContainer.append(allProjectDiv)
+
         })
       })
   }
@@ -126,7 +149,7 @@ function viewAllProjects(event) {
 //GET user clicks on a project title & goes to the idea page for that project
 function allIdeasPage(event) {
   if (event.target.className === "project_title") {
-    allProjectDiv.innerHTML = ""
+    newProjectContainer.innerHTML = ""
     let projectID = event.target.dataset.id
     fetch("http://localhost:3000/api/v1/ideas")
       .then(rep => rep.json())
@@ -137,29 +160,34 @@ function allIdeasPage(event) {
         project_ideas.forEach(function (idea) {
           let ideaContainer = document.createElement("div")
           ideaContainer.className= "idea_container"
+          ideaContainer.dataset.id = idea.id
           let ideaCard = document.createElement("div")
           ideaCard.className = "idea_card"
+          ideaCard.dataset.id = idea.id
           let ideaFront = document.createElement("div")
+          ideaFront.dataset.id = idea.id
           ideaFront.className = "idea_front"
           let ideaBack = document.createElement("div")
+          ideaBack.dataset.id = idea.id
           ideaBack.className = "idea_back"
 
-          let editIdeaButton = document.createElement("button")
-          editIdeaButton.dataset.id = idea.id
-          editIdeaButton.innerText = "Edit"
+          // let editIdeaButton = document.createElement("button")
+          // editIdeaButton.dataset.id = idea.id
+          // editIdeaButton.innerText = "Edit"
 
           let ideaBoxFront = document.createElement("div")
           ideaBoxFront.className = "idea_box_front"
           ideaBoxFront.dataset.id = idea.id
           ideaBoxFront.innerHTML = `
-          <p>Title: ${idea.title}</p>
-          <p>Content: ${idea.content}</p>
+          <p>${idea.title}</p>
+          <p>${idea.content}</p>
           `
-          ideaBoxFront.append(editIdeaButton)
+          // ideaBoxFront.append(editIdeaButton)
           ideaCard.append(ideaBoxFront)
 
           let ideaBoxBack = document.createElement("div")
           ideaBoxBack.className = "idea_box_back"
+          ideaBoxBack.dataset.id = idea.id
           ideaBoxBack.innerHTML = `
           <p>Protagonist: ${idea.protagonist}</p>
           <p>Antagonist: ${idea.antagonist}</p>
@@ -167,6 +195,11 @@ function allIdeasPage(event) {
           <p>Ends: ${idea.ends}</p>
           <p>Act: ${idea.act}</p>
           <p>Turn: ${idea.turn}</p>
+          <p>Description: ${idea.description}</p>
+          <p>Conflict: ${idea.conflict}</p>
+          <p>Research: ${idea.research}</p>
+          <p>Inspiration: ${idea.inspiration}</p>
+          <p>Miscellaneous: ${idea.miscellaneous}</p>
           `
           ideaCard.append(ideaBoxBack)
           ideaContainer.append(ideaCard)
@@ -187,7 +220,7 @@ function allIdeasPage(event) {
 function createProject(event) {
   event.preventDefault()
   if (event.target.className === "create_project") {
-    allProjectDiv.innerHTML = ""
+    newProjectContainer.innerHTML = ""
     allIdeasDiv.innerHTML = ""
     formContainer.append(newProjectForm)
     projectIdeaForm.innerHTML = ""
@@ -267,6 +300,17 @@ function editSingleIdea(event){
   })
   .then(r => r.json())
   .then(newIdea => showSingleIdea(newIdea))
+}
+
+function showASingleIdea(event) {
+  let ideaId = event.target.dataset.id
+  console.log(ideaId);
+  newProjectContainer.innerHTML = ""
+  allIdeasDiv.innerHTML = ""
+
+  fetch(`http://localhost:3000/api/v1/ideas/${ideaId}`)
+    .then(res => res.json())
+    .then(idea => console.log(idea))
 }
 
 
