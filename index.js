@@ -35,7 +35,7 @@ projectIdeaForm.addEventListener("submit", submitProjectIdea)
 let navbar = document.getElementById('navbar_items')
 navbar.addEventListener("click", viewAllProjects)
 navbar.addEventListener("click", createProject)
-navbar.addEventListener("click", createNewIdea) //haven't implemented
+
 
 //GET dropdown for exisiting project titles
 fetch("http://localhost:3000/api/v1/projects")
@@ -48,6 +48,7 @@ fetch("http://localhost:3000/api/v1/projects")
       exisitingProjectTitleDropdown.append(option)
     })
   })
+
 
 //POST submit a new project on our "homepage"
 function submitNewProject(event) {
@@ -70,8 +71,7 @@ function submitNewProject(event) {
   newProjectProtagonist.value=""
 }
 
-//POST submit a new idea to an exisiting project on our "homepage"
-//Roberto's works BUT added coded fix for acts
+
 function submitProjectIdea(event) {
   event.preventDefault()
   console.log(ideaAct.value)
@@ -94,22 +94,13 @@ function submitProjectIdea(event) {
       research: ideaResearch.value,
       inspiration: ideaInspo.value,
       miscellaneous: ideaMisc.value,
-      project_id: exisitingProjectTitleDropdown.value
+      project_id: 1
     })
   })
-    ideaTitle.value=""
-    ideaContent.value=""
-    ideaProtagonist.value=""
-    ideaAntagonist.value=""
-    ideaStart.value=""
-    ideaEnd.value=""
-    ideaAct.value=""
-    ideaTurn.value=""
-    ideaDescription.value=""
-    ideaConflict.value=""
-    ideaResearch.value=""
-    ideaInspo.value=""
-    ideaMisc.value=""
+  .then(r => r.json())
+  .then(newIdea => showSingleIdea(newIdea))
+  projectIdeaForm.reset()
+  //WE NEED TO SAVE/POST NEW STRUCTURE HERE
 }
 
 //GET user goes to navbar & clicks "view all projects"
@@ -130,7 +121,6 @@ function viewAllProjects(event) {
         })
       })
   }
-
 }
 
 //GET user clicks on a project title & goes to the idea page for that project
@@ -190,7 +180,10 @@ function allIdeasPage(event) {
 
 
 
+
 //POST when user clickes on "Create A Project" on the navbar
+
+
 function createProject(event) {
   event.preventDefault()
   if (event.target.className === "create_project") {
@@ -218,33 +211,63 @@ function createProject(event) {
   }
 }
 
-//when user clicks on Create Idea on the nabvar -- use Roberto's code & my html for Acts
-function createNewIdea(event) {
-  event.preventDefault()
-  if (event.target.className === "create_idea") {
-    allProjectDiv.innerHTML = ""
-    allIdeasDiv.innerHTML = ""
-    formContainer.append(newProjectForm, projectIdeaForm)
 
-    //fetch to POST
-  }
+//Declare Variables for CurrentIdea and CurrentStructure
+let currentIdea
+let currentStructure
+
+//Activate Edit button
+let editButton = document.getElementById('edit-btn')
+
+editButton.addEventListener('click', event => editSingleIdea(event))
+
+//Populate Single View Card with Content and Values
+function showSingleIdea(idea){
+  editButton.dataset.editId = idea.id
+
+  ideaTitle.value = idea.title
+  ideaContent.value = idea.content
+  ideaProtagonist.value = idea.protagonist
+  ideaAntagonist.value = idea.antagonist
+  ideaStart.value = idea.begins
+  ideaEnd.value = idea.ends
+  ideaAct.value = idea.act
+  ideaTurn.value = idea.turn
+  ideaDescription.value = idea.description
+  ideaConflict.value = idea.conflict
+  ideaResearch.value = idea.research
+  ideaInspo.value = idea.inspiration
+  ideaMisc.value = idea.miscellaneous
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Update Single View Card with new Content and Values
+function editSingleIdea(event){
+  fetch("http://localhost:3000/api/v1/ideas/" + event.target.dataset.editId, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: ideaTitle.value,
+      content: ideaContent.value ,
+      protagonist: ideaProtagonist.value,
+      antagonist: ideaAntagonist.value,
+      begins: ideaStart.value,
+      ends: ideaEnd.value,
+      act: ideaAct.value,
+      turn: ideaTurn.value,
+      description: ideaDescription.value,
+      conflict: ideaConflict.value,
+      research: ideaResearch.value,
+      inspiration: ideaInspo.value,
+      miscellaneous: ideaMisc.value,
+      project_id: 1
+    })
+  })
+  .then(r => r.json())
+  .then(newIdea => showSingleIdea(newIdea))
+}
 
 
 
