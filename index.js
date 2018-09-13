@@ -11,7 +11,7 @@ let allIdeasDiv = document.getElementById('all_ideas_for_project_div')
 let newProjectForm = document.getElementById('create_new_project')
 let newProjectTitle = document.querySelector("[name=new_project_title]")
 let newProjectProtagonist = document.querySelector("[name=project_protagonist]")
-// newProjectForm.addEventListener("submit", submitNewProject)
+newProjectForm.addEventListener("submit", submitNewProject)
 
 //query for form to submit idea
 let projectIdeaForm = document.getElementById('create-project-idea-form')
@@ -35,9 +35,8 @@ projectIdeaForm.addEventListener("submit", submitProjectIdea)
 let navbar = document.getElementById('navbar_items')
 navbar.addEventListener("click", viewAllProjects)
 navbar.addEventListener("click", createProject) //haven't implemented
-navbar.addEventListener("click", createNewIdea) //haven't implemented
 
-//GET dropdown for exisiting project titles
+// GET dropdown for exisiting project titles
 // fetch("http://localhost:3000/api/v1/projects")
 //   .then(rep => rep.json())
 //   .then(function (projects) {
@@ -88,7 +87,10 @@ function submitProjectIdea(event) {
       project_id: 1
     })
   })
+  .then(r => r.json())
+  .then(newIdea => showSingleIdea(newIdea))
   projectIdeaForm.reset()
+  //WE NEED TO SAVE/POST NEW STRUCTURE HERE
 }
 
 //GET user goes to navbar & clicks "view all projects"
@@ -109,7 +111,6 @@ function viewAllProjects(event) {
         })
       })
   }
-
 }
 
 //GET user clicks on a project title & goes to the idea page for that project
@@ -161,16 +162,60 @@ function createProject(event) {
   }
 }
 
-//this doesnt have function yet
-function createNewIdea(event) {
-  event.preventDefault()
-  if (event.target.className === "create_idea") {
-    allProjectDiv.innerHTML = ""
-    allIdeasDiv.innerHTML = ""
-    formContainer.append(newProjectForm, projectIdeaForm)
+//Declare Variables for CurrentIdea and CurrentStructure
+let currentIdea
+let currentStructure
 
-    //fetch to POST
-  }
+//Activate Edit button
+let editButton = document.getElementById('edit-btn')
+
+editButton.addEventListener('click', event => editSingleIdea(event))
+
+//Populate Single View Card with Content and Values
+function showSingleIdea(idea){
+  editButton.dataset.editId = idea.id
+
+  ideaTitle.value = idea.title
+  ideaContent.value = idea.content
+  ideaProtagonist.value = idea.protagonist
+  ideaAntagonist.value = idea.antagonist
+  ideaStart.value = idea.begins
+  ideaEnd.value = idea.ends
+  ideaAct.value = idea.act
+  ideaTurn.value = idea.turn
+  ideaDescription.value = idea.description
+  ideaConflict.value = idea.conflict
+  ideaResearch.value = idea.research
+  ideaInspo.value = idea.inspiration
+  ideaMisc.value = idea.miscellaneous
+}
+
+//Update Single View Card with new Content and Values
+function editSingleIdea(event){
+  fetch("http://localhost:3000/api/v1/ideas/" + event.target.dataset.editId, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: ideaTitle.value,
+      content: ideaContent.value ,
+      protagonist: ideaProtagonist.value,
+      antagonist: ideaAntagonist.value,
+      begins: ideaStart.value,
+      ends: ideaEnd.value,
+      act: ideaAct.value,
+      turn: ideaTurn.value,
+      description: ideaDescription.value,
+      conflict: ideaConflict.value,
+      research: ideaResearch.value,
+      inspiration: ideaInspo.value,
+      miscellaneous: ideaMisc.value,
+      project_id: 1
+    })
+  })
+  .then(r => r.json())
+  .then(newIdea => showSingleIdea(newIdea))
 }
 
 

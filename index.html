@@ -21,20 +21,6 @@
   <a href="#" class="create_idea">View All Ideas</a>
   </div>
 
-  <!-- idea needs to be added to exisiting project -->
-  <!-- <div id="form_container">
-    <form id="create_new_project" style="">
-      <h3>Create A New Project</h3>
-      <label>Project Title</label>
-      <input type="text" name="new_project_title" value="" placeholder="Enter a project title" class="input-text">
-      <br>
-      <label>Project Protagonist</label>
-      <input type="text" name="project_protagonist" value="" placeholder="Enter the protagonist" class="input-text">
-      <br>
-      <br>
-      <input type="submit" name="submit" value="Submit" class="submit">
-    </form> -->
-
     <form id="create-project-idea-form" style="">
       <div id="single_idea" class="wrapperindex">
         <div id="top_margin"></div>
@@ -46,18 +32,18 @@
         <input type="text" name="antagonist" value="" placeholder="scene antagonist" class="left_side_button">
         <br>
         <br>
-        <label>Act: </label>
         <br>
+        <label>Act</label>
         <select id="act">
           <option value=""></option>
-          <option value="act_1">1</option>
-          <option value="act_2">2</option>
-          <option value="act_3">3</option>
-          <option value="act_4">4</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
         </select>
         <br>
         <br>
-        <label>Turn: </label>
+        <label>Turn</label>
         <select id="turn">
           <option value=""></option>
           <option value="inciting_incident">Inciting Incident</option>
@@ -70,7 +56,7 @@
         <br>
         <br>
         <br>
-        <label>Begins: </label>
+        <label>Begins</label>
         <select id="start">
           <option value=""></option>
           <option value="+">+</option>
@@ -78,7 +64,7 @@
         </select>
         <br>
         <br>
-        <label>Ends: </label>
+        <label>Ends</label>
         <select id="end">
           <option value=""></option>
           <option value="+">+</option>
@@ -97,11 +83,15 @@
           <br>
           <input type="text" name="idea_content" value="" placeholder="your text..." class="idea_content_input">
         </div>
+
         <div id="right_buttons_column">
+          <br><br><br><br><br>
               <input type="submit" name="new" value="New Idea" class="submit-btn">
               <br>
               <br>
-              <input type="submit" name="edit" value="Edit Idea" class="submit-btn">
+              <br><br><br>
+              <br><br>
+              <button id="edit-btn" name="edit"class="submit-btn">Edit Idea</button>
         </div>
 
         <div id="right_margin"> </div>
@@ -153,7 +143,10 @@
           </select>
         </div>
 
-        <div id="previous_next_banner">Back 7/15 Next</div>
+        <div id="previous_next_banner">
+          <button id="previous-btn" class="previous-btn">Previous Idea</button>
+          <button id="next-btn" class="next-btn">Next Idea</button>
+          </div>
       </div>
     </form>
 
@@ -168,6 +161,20 @@
 
   <div id="single_idea">
   </div>
+
+  <!-- idea needs to be added to exisiting project -->
+  <div id="form_container">
+    <form id="create_new_project" style="">
+      <h3>Create A New Project</h3>
+      <label>Project Title</label>
+      <input type="text" name="new_project_title" value="" placeholder="Enter a project title" class="input-text">
+      <br>
+      <label>Project Protagonist</label>
+      <input type="text" name="project_protagonist" value="" placeholder="Enter the protagonist" class="input-text">
+      <br>
+      <br>
+      <input type="submit" name="submit" value="Submit" class="submit">
+    </form>
 
 <script src="index.js" charset="utf-8"></script>
 </body>
