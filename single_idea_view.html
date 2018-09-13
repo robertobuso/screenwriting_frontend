@@ -25,7 +25,55 @@
 <form id="create-project-idea-form" style="">
   <div id="single_idea" class="wrapperindex">
     <div id="top_margin"></div>
-    <div id="left_buttons_column">Buttons</div>
+    <div id="left_buttons_column">
+        <br>
+        <br>
+      <input type="text" name="protagonist" value="" placeholder="scene protagonist" class="left_side_button">
+      <br>
+      <br>
+    <input type="text" name="antagonist" value="" placeholder="scene antagonist" class="left_side_button">
+    <br>
+    <br>
+    <label>Begins</label>
+    <select id="start">
+      <option value=nil></option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+    <br>
+    <br>
+    <label>Ends</label>
+    <select id="end">
+      <option value=nil></option>
+      <option value="+">+</option>
+      <option value="++">++</option>
+      <option value="+++">+++</option>
+      <option value="- -">- -</option>
+      <option value="- - -">- - -</option>
+    </select>
+  <br>
+  <br>
+    <label>Act</label>
+    <select id="act">
+      <option value=nil></option>
+      <option value="act_1">1</option>
+      <option value="act_2">2</option>
+      <option value="act_3">3</option>
+      <option value="act_4">4</option>
+    </select>
+    <br>
+    <br>
+    <label>Turn</label>
+    <select id="turn">
+      <option value=nil></option>
+      <option value="inciting_incident">Inciting Incident</option>
+      <option value="break_two">Break Into Two</option>
+      <option value="midpoint">Midpoint</option>
+      <option value="break_four">Break Into Four</option>
+      <option value="crisis_decision">Crisis Decision</option>
+      <option value="denouement">Denouement</option>
+    </select>
+    </div>
     <div id="content_grid">
       <input type="text" name="idea_title" value="" placeholder="short description" class="idea_title_input">
       <br>
