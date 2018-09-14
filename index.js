@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", ()=> {
 
 //general queries (main document containers)
+let singleIdeaView = document.getElementById('single_idea_view')
 let formContainer = document.getElementById('form_container')
 let newProjectContainer = document.getElementById("append_all_project_div")
 let allProjectDiv = document.createElement("div")
@@ -10,7 +11,7 @@ projectList.className = "project_list"
 allProjectDiv.append(projectList)
 allProjectDiv.addEventListener("click", allIdeasPage)
 let allIdeasDiv = document.getElementById('all_ideas_for_project_div')
-allIdeasDiv.addEventListener("click", showASingleIdea)
+
 
 //query for form to submit new project
 let newProjectForm = document.createElement("form")
@@ -91,7 +92,6 @@ function submitNewProject(event) {
   newProjectProtagonist.value=""
 }
 
-
 function submitProjectIdea(event) {
   event.preventDefault()
   console.log(ideaAct.value)
@@ -125,10 +125,9 @@ function submitProjectIdea(event) {
 
 //GET user goes to navbar & clicks "view all projects"
 function viewAllProjects(event) {
-  formContainer.innerHTML = ""
-  projectIdeaForm.innerHTML = ""
-  allProjectDiv.innerHTML = ""
-  allIdeasDiv.innerHTML = ""
+  formContainer.hidden = true
+  projectIdeaForm.hidden = true
+  allIdeasDiv.hidden = true
   if (event.target.className === "view_projects") {
     fetch("http://localhost:3000/api/v1/projects")
       .then(rep => rep.json())
@@ -139,8 +138,8 @@ function viewAllProjects(event) {
           bulletPoint.innerHTML = `<a data-id='${project.id}' class='project_title' href='#'>${project.title}</a>`
           projectList.append(bulletPoint)
           allProjectDiv.append(projectList)
+          newProjectContainer.hidden = false
           newProjectContainer.append(allProjectDiv)
-
         })
       })
   }
@@ -149,13 +148,12 @@ function viewAllProjects(event) {
 //GET user clicks on a project title & goes to the idea page for that project
 function allIdeasPage(event) {
   if (event.target.className === "project_title") {
-    newProjectContainer.innerHTML = ""
+    newProjectContainer.hidden = true
     let projectID = event.target.dataset.id
     fetch("http://localhost:3000/api/v1/ideas")
       .then(rep => rep.json())
       .then(function (ideas) {
         let project_ideas = ideas.filter(idea => idea.project_id === parseInt(projectID))
-
 
         project_ideas.forEach(function (idea) {
           let ideaContainer = document.createElement("div")
@@ -171,10 +169,6 @@ function allIdeasPage(event) {
           ideaBack.dataset.id = idea.id
           ideaBack.className = "idea_back"
 
-          // let editIdeaButton = document.createElement("button")
-          // editIdeaButton.dataset.id = idea.id
-          // editIdeaButton.innerText = "Edit"
-
           let ideaBoxFront = document.createElement("div")
           ideaBoxFront.className = "idea_box_front"
           ideaBoxFront.dataset.id = idea.id
@@ -182,7 +176,6 @@ function allIdeasPage(event) {
           <p>${idea.title}</p>
           <p>${idea.content}</p>
           `
-          // ideaBoxFront.append(editIdeaButton)
           ideaCard.append(ideaBoxFront)
 
           let ideaBoxBack = document.createElement("div")
@@ -202,28 +195,23 @@ function allIdeasPage(event) {
           <p>Miscellaneous: ${idea.miscellaneous}</p>
           `
           ideaCard.append(ideaBoxBack)
+          ideaBoxBack.addEventListener("click", showASingleIdea)
           ideaContainer.append(ideaCard)
+          // allIdeasDiv.hidden = false
           return allIdeasDiv.append(ideaContainer)
-
-          // return allIdeasDiv.append(ideaBox)
         })
       })
   }
 }
 
-
-
-
 //POST when user clickes on "Create A Project" on the navbar
-
-
 function createProject(event) {
   event.preventDefault()
   if (event.target.className === "create_project") {
-    newProjectContainer.innerHTML = ""
-    allIdeasDiv.innerHTML = ""
+    newProjectContainer.hidden = true
+    allIdeasDiv.hidden = true
     formContainer.append(newProjectForm)
-    projectIdeaForm.innerHTML = ""
+    projectIdeaForm.hidden = true
 
     fetch("http://localhost:3000/api/v1/projects", {
       method: "POST",
@@ -256,6 +244,15 @@ editButton.addEventListener('click', event => editSingleIdea(event))
 
 //Populate Single View Card with Content and Values
 function showSingleIdea(idea){
+  let projectTitle = document.getElementById('idea_project_title')
+  let projectProtagonist = document.getElementById('idea_project_protagonist')
+  projectTitle.innerText = `Project Title: ${idea.project.title}`
+  projectProtagonist.innerText = `Project Protagonist: ${idea.project.protagonist}`
+  let viewAllBtn = document.getElementById('view-all-ideas-this-project-btn')
+  viewAllBtn.hidden = false
+  viewAllBtn.dataset.id = idea.project.id
+  viewAllBtn.addEventListener("click", fromSingleToAll)
+
   editButton.dataset.editId = idea.id
 
   ideaTitle.value = idea.title
@@ -272,6 +269,64 @@ function showSingleIdea(idea){
   ideaInspo.value = idea.inspiration
   ideaMisc.value = idea.miscellaneous
 
+}
+
+function fromSingleToAll(event) {
+  if (event.target.id === "view-all-ideas-this-project-btn") {
+    singleIdeaView.hidden = true
+    let projectID = event.target.dataset.id
+    fetch("http://localhost:3000/api/v1/ideas")
+      .then(rep => rep.json())
+      .then(function (ideas) {
+        let project_ideas = ideas.filter(idea => idea.project_id === parseInt(projectID))
+
+        project_ideas.forEach(function (idea) {
+          let ideaContainer = document.createElement("div")
+          ideaContainer.className= "idea_container"
+          ideaContainer.dataset.id = idea.id
+          let ideaCard = document.createElement("div")
+          ideaCard.className = "idea_card"
+          ideaCard.dataset.id = idea.id
+          let ideaFront = document.createElement("div")
+          ideaFront.dataset.id = idea.id
+          ideaFront.className = "idea_front"
+          let ideaBack = document.createElement("div")
+          ideaBack.dataset.id = idea.id
+          ideaBack.className = "idea_back"
+
+          let ideaBoxFront = document.createElement("div")
+          ideaBoxFront.className = "idea_box_front"
+          ideaBoxFront.dataset.id = idea.id
+          ideaBoxFront.innerHTML = `
+          <p>${idea.title}</p>
+          <p>${idea.content}</p>
+          `
+          ideaCard.append(ideaBoxFront)
+
+          let ideaBoxBack = document.createElement("div")
+          ideaBoxBack.className = "idea_box_back"
+          ideaBoxBack.dataset.id = idea.id
+          ideaBoxBack.innerHTML = `
+          <p>Protagonist: ${idea.protagonist}</p>
+          <p>Antagonist: ${idea.antagonist}</p>
+          <p>Begins: ${idea.begins}</p>
+          <p>Ends: ${idea.ends}</p>
+          <p>Act: ${idea.act}</p>
+          <p>Turn: ${idea.turn}</p>
+          <p>Description: ${idea.description}</p>
+          <p>Conflict: ${idea.conflict}</p>
+          <p>Research: ${idea.research}</p>
+          <p>Inspiration: ${idea.inspiration}</p>
+          <p>Miscellaneous: ${idea.miscellaneous}</p>
+          `
+          ideaCard.append(ideaBoxBack)
+          ideaBoxBack.addEventListener("click", showASingleIdea)
+          ideaContainer.append(ideaCard)
+          // allIdeasDiv.hidden = false
+          return allIdeasDiv.append(ideaContainer)
+        })
+      })
+  }
 }
 
 //Update Single View Card with new Content and Values
@@ -303,14 +358,18 @@ function editSingleIdea(event){
 }
 
 function showASingleIdea(event) {
-  let ideaId = event.target.dataset.id
-  console.log(ideaId);
-  newProjectContainer.innerHTML = ""
-  allIdeasDiv.innerHTML = ""
+  if (event.target.className === "idea_box_back") {
+    projectIdeaForm.hidden = false
+    singleIdeaView.append(projectIdeaForm)
+    newProjectContainer.hidden = true
+    allIdeasDiv.innerHTML = ""
 
-  fetch(`http://localhost:3000/api/v1/ideas/${ideaId}`)
-    .then(res => res.json())
-    .then(idea => console.log(idea))
+    let ideaId = event.target.dataset.id
+    console.log(ideaId)
+    fetch(`http://localhost:3000/api/v1/ideas/${ideaId}`)
+      .then(res => res.json())
+      .then(idea => showSingleIdea(idea))
+  }
 }
 
 

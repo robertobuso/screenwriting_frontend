@@ -256,6 +256,10 @@ body {
   background: #F0E68C;
    border-radius: 25px;
 }
+.title{
+  color: black;
+  font-size: 25px; 
+}
 
 label {
   /* background: #F0E68C; */
