@@ -62,14 +62,10 @@ margin-left: 10%;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  /* background-color: yellow;
-  color: red; */
   background-image:
   linear-gradient(180deg, white 3rem, #F0A4A4 calc(3rem), #F0A4A4 calc(3rem + 2px), transparent 1px),
   repeating-linear-gradient(0deg, #ffffff, #ffffff 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
   box-shadow: 1px 1px 3px rgba(0,0,0,.25);
-  /* height: 275px;
-  width: 300px; */
 }
 
 /*  shows back face */
@@ -173,7 +169,6 @@ body {
 }
 
 #previous_next_banner {
-  /* background: rgba(0, 0, 0, 0.6); */
   grid-column: 1/5;
   height: 40px;
   font-size: 20px;
@@ -193,8 +188,6 @@ body {
   height: 400px;
   font-size: 20px;
   margin-right: 30px;
-  /* background: rgba(0, 0, 0, 0.6); */
-
 }
 
 #content_grid {
@@ -217,18 +210,19 @@ body {
 }
 
 .idea_title_input {
-  background-color: white;
+  background-color: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 45px;
   text-align: center;
   margin-top: 7px;
   width: 600;
 }
 
 .idea_content_input {
-  background-color: white;
+  background-color: transparent;
   border: none;
-  font-size: 14px;
+  text-align: center;
+  font-size: 45px;
   margin-top: 14px;
   margin-left: 20px;
   margin-right: 5px;
@@ -262,21 +256,26 @@ body {
 }
 
 
-label {
-  /* background: #F0E68C; */
-  color: white;
+.text {
+
+  color: black;
 
 }
-/* label {
-  background: #F0E68C;
->>>>>>> origin/roberto_frontend
+
+.view_protagonist {
+  font-size: 18px;
+}
+
+label {
+  color: white;
+  /* background: #F0E68C; */
   border: 1px #F0E68C;
   padding: 2px;
   border-radius: 25px;
   font-size: 18px;
   margin-right: 8px;
   margin-left: 8px;
-} */
+}
 
 /*The following code changes the color of the placehoder text */
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
