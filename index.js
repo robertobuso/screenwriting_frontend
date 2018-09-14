@@ -233,7 +233,10 @@ function createProject(event) {
 
 //Activate Edit button
 let editButton = document.getElementById('edit-btn')
-editButton.addEventListener('click', event => editSingleIdea(event))
+editButton.addEventListener('click', event => {
+  event.preventDefault()
+  editSingleIdea(event)
+})
 
 //Populate Single View Card with Content and Values
 function showSingleIdea(idea){
@@ -383,6 +386,71 @@ function saveStructure(event) {
   )
   .then(r => r.json())
   .then(r => currentStructure = r.order)
+  .then(function (structure) {
+    let arrayOfIdeaIds = []
+    // console.log(structure)
+    for (let value in structure) {
+      let idea = Object.values(structure[value])
+      idea.toString()
+      arrayOfIdeaIds.push(parseInt(idea))
+    }
+    // console.log(arrayOfIdeaIds);
+    allIdeasDiv.innerHTML = ""
+
+    arrayOfIdeaIds.forEach(function (id) {
+      fetch(`http://localhost:3000/api/v1/ideas/${id}`)
+        .then(resp => resp.json())
+        .then(function (idea) {
+          console.log(idea)
+          let ideaContainer = document.createElement("div")
+          ideaContainer.className= "idea_container"
+          ideaContainer.dataset.id = idea.id
+          let ideaCard = document.createElement("div")
+          ideaCard.className = "idea_card"
+          ideaCard.dataset.id = idea.id
+          let ideaFront = document.createElement("div")
+          ideaFront.dataset.id = idea.id
+          ideaFront.className = "idea_front"
+          let ideaBack = document.createElement("div")
+          ideaBack.dataset.id = idea.id
+          ideaBack.className = "idea_back"
+
+          let ideaBoxFront = document.createElement("div")
+          ideaBoxFront.className = "idea_box_front"
+          ideaBoxFront.dataset.id = idea.id
+          ideaBoxFront.innerHTML = `
+          <p>${idea.title}</p>
+          <p>${idea.content}</p>
+          `
+          ideaCard.append(ideaBoxFront)
+
+          let ideaBoxBack = document.createElement("div")
+          ideaBoxBack.className = "idea_box_back"
+          ideaBoxBack.dataset.id = idea.id
+          ideaBoxBack.innerHTML = `
+          ${idea.protagonist ? `<p>Protagonist: ${idea.protagonist}</p>` : ""}
+          ${idea.antagonist ? `<p>Antagonist: ${idea.antagonist}</p>` : ""}
+          ${idea.begins ? `<p>Begins: ${idea.begins}</p>` : ""}
+          ${idea.ends ? `<p>Ends: ${idea.ends}</p>` : ""}
+          ${idea.act ? `<p>Act: ${idea.act}</p>` : ""}
+          ${idea.turn ? `<p>Turn: ${idea.turn}</p>` : ""}
+          ${idea.description ? `<p>Description: ${idea.description}</p>` : ""}
+          ${idea.conflict ? `<p>Conflict: ${idea.conflict}</p>` : ""}
+          ${idea.research ? `<p>Research: ${idea.research}</p>` : ""}
+          ${idea.inspiration ? `<p>Inspiration: ${idea.inspiration}</p>` : ""}
+          ${idea.miscellaneous ? `<p>Miscellaneous: ${idea.miscellaneous}</p>` : ""}
+          `
+          ideaCard.append(ideaBoxBack)
+          ideaBoxBack.addEventListener("click", showASingleIdea)
+          ideaContainer.append(ideaCard)
+          // allIdeasDiv.hidden = false
+          return allIdeasDiv.append(ideaContainer)
+
+        })
+    })
+
+
+  })
 }
 
 function findStructure(event) {

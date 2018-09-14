@@ -146,7 +146,7 @@ margin-left: 10%;
     display: block;
 }
 
-.navbar :nth-child(2) {
+.navbar :nth-child(3) {
   float: right
 }
 
