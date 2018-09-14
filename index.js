@@ -182,17 +182,17 @@ function allIdeasPage(event) {
           ideaBoxBack.className = "idea_box_back"
           ideaBoxBack.dataset.id = idea.id
           ideaBoxBack.innerHTML = `
-          <p>Protagonist: ${idea.protagonist}</p>
-          <p>Antagonist: ${idea.antagonist}</p>
-          <p>Begins: ${idea.begins}</p>
-          <p>Ends: ${idea.ends}</p>
-          <p>Act: ${idea.act}</p>
-          <p>Turn: ${idea.turn}</p>
-          <p>Description: ${idea.description}</p>
-          <p>Conflict: ${idea.conflict}</p>
-          <p>Research: ${idea.research}</p>
-          <p>Inspiration: ${idea.inspiration}</p>
-          <p>Miscellaneous: ${idea.miscellaneous}</p>
+          ${idea.protagonist ? `<p>Protagonist: ${idea.protagonist}</p>` : ""}
+          ${idea.antagonist ? `<p>Antagonist: ${idea.antagonist}</p>` : ""}
+          ${idea.begins ? `<p>Begins: ${idea.begins}</p>` : ""}
+          ${idea.ends ? `<p>Ends: ${idea.ends}</p>` : ""}
+          ${idea.act ? `<p>Act: ${idea.act}</p>` : ""}
+          ${idea.turn ? `<p>Turn: ${idea.turn}</p>` : ""}
+          ${idea.description ? `<p>Description: ${idea.description}</p>` : ""}
+          ${idea.conflict ? `<p>Conflict: ${idea.conflict}</p>` : ""}
+          ${idea.research ? `<p>Research: ${idea.research}</p>` : ""}
+          ${idea.inspiration ? `<p>Inspiration: ${idea.inspiration}</p>` : ""}
+          ${idea.miscellaneous ? `<p>Miscellaneous: ${idea.miscellaneous}</p>` : ""}
           `
           ideaCard.append(ideaBoxBack)
           ideaBoxBack.addEventListener("click", showASingleIdea)
@@ -307,17 +307,17 @@ function fromSingleToAll(event) {
           ideaBoxBack.className = "idea_box_back"
           ideaBoxBack.dataset.id = idea.id
           ideaBoxBack.innerHTML = `
-          <p>Protagonist: ${idea.protagonist}</p>
-          <p>Antagonist: ${idea.antagonist}</p>
-          <p>Begins: ${idea.begins}</p>
-          <p>Ends: ${idea.ends}</p>
-          <p>Act: ${idea.act}</p>
-          <p>Turn: ${idea.turn}</p>
-          <p>Description: ${idea.description}</p>
-          <p>Conflict: ${idea.conflict}</p>
-          <p>Research: ${idea.research}</p>
-          <p>Inspiration: ${idea.inspiration}</p>
-          <p>Miscellaneous: ${idea.miscellaneous}</p>
+          ${idea.protagonist ? `<p>Protagonist: ${idea.protagonist}</p>` : ""}
+          ${idea.antagonist ? `<p>Antagonist: ${idea.antagonist}</p>` : ""}
+          ${idea.begins ? `<p>Begins: ${idea.begins}</p>` : ""}
+          ${idea.ends ? `<p>Ends: ${idea.ends}</p>` : ""}
+          ${idea.act ? `<p>Act: ${idea.act}</p>` : ""}
+          ${idea.turn ? `<p>Turn: ${idea.turn}</p>` : ""}
+          ${idea.description ? `<p>Description: ${idea.description}</p>` : ""}
+          ${idea.conflict ? `<p>Conflict: ${idea.conflict}</p>` : ""}
+          ${idea.research ? `<p>Research: ${idea.research}</p>` : ""}
+          ${idea.inspiration ? `<p>Inspiration: ${idea.inspiration}</p>` : ""}
+          ${idea.miscellaneous ? `<p>Miscellaneous: ${idea.miscellaneous}</p>` : ""}
           `
           ideaCard.append(ideaBoxBack)
           ideaBoxBack.addEventListener("click", showASingleIdea)
@@ -371,8 +371,5 @@ function showASingleIdea(event) {
       .then(idea => showSingleIdea(idea))
   }
 }
-
-
-
 
 }) //dom event listener
