@@ -12,7 +12,6 @@ allProjectDiv.append(projectList)
 allProjectDiv.addEventListener("click", allIdeasPage)
 let allIdeasDiv = document.getElementById('all_ideas_for_project_div')
 
-
 //query for form to submit new project
 let newProjectForm = document.createElement("form")
 newProjectForm.className = 'create_new_project'
@@ -28,10 +27,8 @@ newProjectForm.innerHTML = `
 <br>
 <input type="submit" name="submit" value="Submit" class="submit">`
 
-// formContainer.append(newProjectForm)
-
-let newProjectTitle = document.querySelector("[name=new_project_title]")
-let newProjectProtagonist = document.querySelector("[name=project_protagonist]")
+let newProjectTitle = newProjectForm.querySelector("[name=new_project_title]")
+let newProjectProtagonist = newProjectForm.querySelector("[name=project_protagonist]")
 newProjectForm.addEventListener("submit", submitNewProject)
 
 //query for form to submit idea
@@ -57,7 +54,6 @@ let navbar = document.getElementById('navbar_items')
 navbar.addEventListener("click", viewAllProjects)
 navbar.addEventListener("click", createProject)
 
-
 //GET dropdown for exisiting project titles
 fetch("http://localhost:3000/api/v1/projects")
   .then(rep => rep.json())
@@ -70,8 +66,6 @@ fetch("http://localhost:3000/api/v1/projects")
     })
   })
 
-
-//POST submit a new project on our "homepage"
 function submitNewProject(event) {
   event.preventDefault()
   fetch("http://localhost:3000/api/v1/projects", {
@@ -94,7 +88,6 @@ function submitNewProject(event) {
 
 function submitProjectIdea(event) {
   event.preventDefault()
-  console.log(ideaAct.value)
   fetch("http://localhost:3000/api/v1/ideas", {
     method: "POST",
     headers: {
@@ -114,11 +107,11 @@ function submitProjectIdea(event) {
       research: ideaResearch.value,
       inspiration: ideaInspo.value,
       miscellaneous: ideaMisc.value,
-      project_id: 1
+      project_id: exisitingProjectTitleDropdown.value
     })
   })
-  .then(r => r.json())
-  .then(newIdea => showSingleIdea(newIdea))
+    .then(r => r.json())
+    .then(newIdea => showSingleIdea(newIdea))
   projectIdeaForm.reset()
   //WE NEED TO SAVE/POST NEW STRUCTURE HERE
 }
@@ -210,25 +203,10 @@ function createProject(event) {
   if (event.target.className === "create_project") {
     newProjectContainer.hidden = true
     allIdeasDiv.hidden = true
-    formContainer.append(newProjectForm)
     projectIdeaForm.hidden = true
-
-    fetch("http://localhost:3000/api/v1/projects", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({title: newProjectTitle.value , protagonist: newProjectProtagonist.value})
-    })
-    .then(res => res.json())
-    .then(function (project) {
-      let option = document.createElement("option")
-      option.innerText = project.title
-      option.value = project.id
-      exisitingProjectTitleDropdown.append(option)
-    })
-    newProjectTitle.value=""
-    newProjectProtagonist.value=""
+    formContainer.hidden = false
+    newProjectForm.hidden = false
+    formContainer.append(newProjectForm)
   }
 }
 
@@ -244,9 +222,7 @@ editButton.addEventListener('click', event => editSingleIdea(event))
 
 //Populate Single View Card with Content and Values
 function showSingleIdea(idea){
-  let projectTitle = document.getElementById('idea_project_title')
   let projectProtagonist = document.getElementById('idea_project_protagonist')
-  projectTitle.innerText = `Project Title: ${idea.project.title}`
   projectProtagonist.innerText = `Project Protagonist: ${idea.project.protagonist}`
   let viewAllBtn = document.getElementById('view-all-ideas-this-project-btn')
   viewAllBtn.hidden = false
@@ -273,6 +249,7 @@ function showSingleIdea(idea){
 
 function fromSingleToAll(event) {
   if (event.target.id === "view-all-ideas-this-project-btn") {
+    projectIdeaForm.hidden = true
     singleIdeaView.hidden = true
     let projectID = event.target.dataset.id
     fetch("http://localhost:3000/api/v1/ideas")
@@ -360,6 +337,7 @@ function editSingleIdea(event){
 function showASingleIdea(event) {
   if (event.target.className === "idea_box_back") {
     projectIdeaForm.hidden = false
+    singleIdeaView.hidden = false
     singleIdeaView.append(projectIdeaForm)
     newProjectContainer.hidden = true
     allIdeasDiv.innerHTML = ""
