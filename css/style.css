@@ -258,20 +258,25 @@ body {
 }
 .title{
   color: black;
-  font-size: 25px; 
+  font-size: 25px;
 }
+
 
 label {
   /* background: #F0E68C; */
   color: white;
 
+}
+/* label {
+  background: #F0E68C;
+>>>>>>> origin/roberto_frontend
   border: 1px #F0E68C;
   padding: 2px;
   border-radius: 25px;
   font-size: 18px;
   margin-right: 8px;
   margin-left: 8px;
-}
+} */
 
 /*The following code changes the color of the placehoder text */
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

@@ -18,6 +18,7 @@
         <a href="#" class="create_project">Create A Project</a>
       </div>
     </div>
+    <a href="#" class="save_structure">Save Structure</a>
   </div>
 
   <form id="create-project-idea-form" style="">
@@ -80,8 +81,6 @@
       </div>
 
       <div id="content_grid">
-        <!-- <p id="idea_project_title"></p> -->
-        <!-- <label class="title">Project Title</label> -->
         <select class="exisiting_project">
         </select>
         <p id="idea_project_protagonist"></p>
@@ -131,6 +130,7 @@
           <option value="production_reality">Production Reality</option>
         </select>
 
+
         <label>Research</label>
         <select id="research">
           <option value=""></option>
@@ -140,6 +140,16 @@
           <option value="time">Time</option>
           <option value="place">Place</option>
         </select>
+
+        <div id="content_grid">
+          <label>Project Title</label>
+           <select class="exisiting_project">
+           </select>
+          <input type="text" name="idea_title" value="" placeholder="short description" class="idea_title_input">
+          <br>
+          <input type="text" name="idea_content" value="" placeholder="your text..." class="idea_content_input">
+        </div>
+
 
         <label>Inspiration</label>
         <select id="inspiration">

@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", ()=> {
+  //Declare Variables for CurrentIdea and CurrentStructure
+  let currentIdea
+  let currentStructure = []
 
 //general queries (main document containers)
 let singleIdeaView = document.getElementById('single_idea_view')
@@ -110,10 +113,25 @@ function submitProjectIdea(event) {
       project_id: exisitingProjectTitleDropdown.value
     })
   })
-    .then(r => r.json())
-    .then(newIdea => showSingleIdea(newIdea))
-  projectIdeaForm.reset()
+  .then(r => r.json())
+  .then(newIdea => {
+    currentIdea = newIdea
+    let x = currentStructure.length + 1
+    currentStructure.push({x: newIdea["id"]})
+    showSingleIdea(newIdea)
+    fetch("http://localhost:3000/api/v1/structures",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ order:currentStructure,  project_id: currentIdea.project_id})
+      }
+    )
+     .then(r => r.json())
   //WE NEED TO SAVE/POST NEW STRUCTURE HERE
+  })
+  projectIdeaForm.reset()
 }
 
 //GET user goes to navbar & clicks "view all projects"
@@ -140,6 +158,7 @@ function viewAllProjects(event) {
 
 //GET user clicks on a project title & goes to the idea page for that project
 function allIdeasPage(event) {
+  findStructure(event)
   if (event.target.className === "project_title") {
     newProjectContainer.hidden = true
     let projectID = event.target.dataset.id
@@ -190,7 +209,8 @@ function allIdeasPage(event) {
           ideaCard.append(ideaBoxBack)
           ideaBoxBack.addEventListener("click", showASingleIdea)
           ideaContainer.append(ideaCard)
-          // allIdeasDiv.hidden = false
+          currentIdea = idea
+          showSingleIdea(currentIdea)
           return allIdeasDiv.append(ideaContainer)
         })
       })
@@ -211,13 +231,8 @@ function createProject(event) {
 }
 
 
-//Declare Variables for CurrentIdea and CurrentStructure
-let currentIdea
-let currentStructure
-
 //Activate Edit button
 let editButton = document.getElementById('edit-btn')
-
 editButton.addEventListener('click', event => editSingleIdea(event))
 
 //Populate Single View Card with Content and Values
@@ -244,7 +259,6 @@ function showSingleIdea(idea){
   ideaResearch.value = idea.research
   ideaInspo.value = idea.inspiration
   ideaMisc.value = idea.miscellaneous
-
 }
 
 function fromSingleToAll(event) {
@@ -327,12 +341,13 @@ function editSingleIdea(event){
       research: ideaResearch.value,
       inspiration: ideaInspo.value,
       miscellaneous: ideaMisc.value,
-      project_id: 1
+      project_id: exisitingProjectTitleDropdown.value
     })
   })
   .then(r => r.json())
   .then(newIdea => showSingleIdea(newIdea))
 }
+
 
 function showASingleIdea(event) {
   if (event.target.className === "idea_box_back") {
@@ -349,5 +364,100 @@ function showASingleIdea(event) {
       .then(idea => showSingleIdea(idea))
   }
 }
+
+//Activate Save Structure link
+let saveStructureLink = document.querySelector('.save_structure')
+saveStructureLink.addEventListener('click', event => saveStructure(event))
+
+function saveStructure(event) {
+  const newStructureTitle = prompt("Please provide a name for this structure.")
+
+  fetch("http://localhost:3000/api/v1/structures",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({title: newStructureTitle, order:currentStructure, saved: true, project_id: currentIdea.project_id})
+    }
+  )
+  .then(r => r.json())
+  .then(r => currentStructure = r.order)
+}
+
+function findStructure(event) {
+  fetch("http://localhost:3000/api/v1/projects/" + event.target.dataset.id)
+    .then(rep => rep.json())
+    .then(function (project) {
+      if (project.structures.length > 0) {
+        currentStructure =
+        project.structures[(project.structures.length - 1)].order
+        currentIdea = project.ideas[currentStructure.length - 1]
+      } else {
+        currentStructure =[]
+      }
+    })
+}
+
+//Previous Button
+let previousButton = document.querySelector('.previous-btn')
+previousButton.addEventListener('click', event => previousIdea())
+
+function previousIdea() {
+  if (currentStructure.length <= 1) {
+    alert("This is the first idea in the current structure.")
+  } else {
+    showSingleIdea(currentIdea)
+  }
+}
+
+// currentIndex = currentStructure.findIndex(isLikeCurrent)
+// function isLikeCurrent(element) {
+// for (const key in currentStructure) {
+//     if currentStructure[key] === element
+//   element === currentIdea.id
+//   }
+
+//Search Ideas by Attribute
+
+function searchByAttribute(event) {
+  if (event.target.className === "search") {
+    formContainer.innerHTML = ""
+    allProjectDiv.innerHTML = ""
+    allIdeasDiv.innerHTML = ""
+
+    let searchBy = event.target.id
+
+    fetch("http://localhost:3000/api/v1/structures",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({search: true, search_by: searchBy, saved: true, order: currentStructure, project_id: currentIdea.project_id})
+      }
+    )
+    .then(r => r.json())
+    .then(ideas => showByAttribute(ideas))
+  }
+}
+
+function showByAttribute(ideas) {
+  console.log(ideas)
+  debugger
+  ideas.forEach(function (idea) {
+    let ideaContainer = document.createElement("div")
+    ideaContainer.className= "idea_container"
+    let ideaCard = document.createElement("div")
+    ideaCard.className = "idea_card"
+    let ideaFront = document.createElement("div")
+    ideaFront.className = "idea_front"
+    let ideaBack = document.createElement("div")
+    ideaBack.className = "idea_back"
+
+  })
+}
+
+
 
 }) //dom event listener
