@@ -31,6 +31,7 @@ https://github.com/robertobuso/screenwriting-app-backend
 
 ## Authors
 **Roberto Busó-García**
+
 **Scarlett Perry**
 
 ## License
