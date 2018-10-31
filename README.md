@@ -4,8 +4,13 @@ Screenwriting productivity SPA that helps order ideas and scenes according to th
 
 ## Application Features
 
-- organized scenes based on user-generated attributes and according to different narrative structure theories.
-
+- User can create and update projects.
+- User can create, update and delete idea notecards.
+- User can mark specific dramatic attributes in each idea notecard.
+- User can see all the idea notecards together organized in original order.
+- App can organize idea notecards based on user-generated attributes and according to narrative structure theory.
+- User can see both sides of note card by hovering over each card.
+- User can save and load different ways of ordering idea notecards.
 
 ## Built With
 - JavaScript
@@ -31,7 +36,6 @@ https://github.com/robertobuso/screenwriting-app-backend
 
 ## Authors
 **Roberto Busó-García**
-
 **Scarlett Perry**
 
 ## License
